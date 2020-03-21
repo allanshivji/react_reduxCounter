@@ -1,17 +1,69 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from './components/App';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+import allReducers from './reducers';
+
+// To connect store with our entire application
+import { Provider } from 'react-redux';
+
+// *****************************************************************************************************
+// 1st we create store
+import { createStore } from 'redux';
+
+const store = createStore(
+    allReducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// STORE - Globalized state of application
+
+
+// *****************************************************************************************************
+// ACTION - Describes what we wanna do. For example in counter action would be to increment
+// const increment = () => {
+//     return {
+//         type: 'INCREMENT'
+//     }
+// }
+
+// const decrement = () => {
+//     return {
+//         type: 'DECREMENT'
+//     }
+// }
+
+// *****************************************************************************************************
+// REDUCER - Checks what action we did and based on the action it will modify the store
+// Also we set the initial state
+
+
+// const counter = (state = 0, action) => {
+//     switch (action.type) {
+//         case 'INCREMENT':
+//             return state + 1;
+
+//         case 'DECREMENT':
+//             return state - 1;
+//     }
+// };
+
+// let store = createStore(counter);
+
+
+// *****************************************************************************************************
+// Display it in console
+// store.subscribe(() => console.log(store.getState()));
+
+// *****************************************************************************************************
+// DISPATCH - Where we execute that action
+
+// store.dispatch(increment());
+
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.querySelector('#root')
+);
